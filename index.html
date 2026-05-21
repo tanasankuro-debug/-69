@@ -3,631 +3,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="โครงงานวิจัยเรื่อง Stagflation ไทย: วิเคราะห์ภาวะเงินเฟ้อต้นทุนของผู้ผลิตและเงินฝืดอุปสงค์ของผู้บริโภค">
-    <title>Stagflation ไทย — เมื่อของแพงขึ้นแต่คนกล้าซื้อน้อยลง</title>
+    <meta name="description" content="Stagflation ไทย: ภาวะเงินเฟ้อต้นทุนของผู้ผลิตและเงินฝืดอุปสงค์ของผู้บริโภค">
+    <title>Stagflation TH | The Economic Paradox</title>
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800;900&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Floating Navigation -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="#hero" class="nav-logo">
-                <span class="logo-icon">📊</span>
-                <span class="logo-text">Stagflation<span class="logo-accent">TH</span></span>
-            </a>
-            <div class="nav-links">
-                <a href="#paradox" class="nav-link">ปัญหา</a>
-                <a href="#data" class="nav-link">ข้อมูล</a>
-                <a href="#theory" class="nav-link">ทฤษฎี</a>
-                <a href="#impact" class="nav-link">ผลกระทบ</a>
-                <a href="#policy" class="nav-link">นโยบาย</a>
-            </div>
-            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-                <span></span><span></span><span></span>
-            </button>
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Background Elements -->
+    <div class="bg-mesh">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="noise-overlay"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar magnetic-wrap">
+        <div class="nav-brand magnetic-item">
+            <span class="brand-icon">⌘</span>
+            <span class="brand-text">Stagflation<span class="gradient-text">TH</span></span>
         </div>
-        <!-- Mobile menu -->
-        <div class="mobile-menu" id="mobileMenu">
-            <a href="#paradox" class="mobile-link">ปัญหา</a>
-            <a href="#data" class="mobile-link">ข้อมูล</a>
-            <a href="#theory" class="mobile-link">ทฤษฎี</a>
-            <a href="#impact" class="mobile-link">ผลกระทบ</a>
-            <a href="#policy" class="mobile-link">นโยบาย</a>
+        <div class="nav-links">
+            <a href="#hero" class="nav-item hover-underline">หน้าแรก</a>
+            <a href="#paradox" class="nav-item hover-underline">ความย้อนแย้ง</a>
+            <a href="#data" class="nav-item hover-underline">ข้อมูลสถิติ</a>
+            <a href="#theory" class="nav-item hover-underline">ทฤษฎี</a>
         </div>
+        <button class="menu-btn magnetic-item">
+            <div class="menu-lines"></div>
+        </button>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero" id="hero">
-        <div class="hero-bg-effects">
-            <div class="orb orb-1"></div>
-            <div class="orb orb-2"></div>
-            <div class="orb orb-3"></div>
-            <div class="grid-overlay"></div>
-        </div>
-        <div class="hero-content">
-            <div class="hero-badge animate-fade-up">
-                <span class="badge-dot"></span>
-                โครงงานวิจัย — เศรษฐศาสตร์
-            </div>
-            <h1 class="hero-title animate-fade-up delay-1">
-                <span class="title-line">ภาวะสองขั้ว</span>
-                <span class="title-gradient">Stagflation</span>
-                <span class="title-line">เศรษฐกิจไทย</span>
-            </h1>
-            <p class="hero-subtitle animate-fade-up delay-2">
-                เมื่อ<span class="text-red">ของแพงขึ้น</span>แต่<span class="text-blue">คนกล้าซื้อน้อยลง</span> — 
-                วิเคราะห์ปรากฏการณ์เงินเฟ้อต้นทุนของผู้ผลิตและเงินฝืดอุปสงค์ของผู้บริโภค
-            </p>
-            <div class="hero-stats animate-fade-up delay-3">
-                <div class="stat-card">
-                    <div class="stat-icon">📈</div>
-                    <div class="stat-value text-red">+5.2%</div>
-                    <div class="stat-label">ต้นทุนผู้ผลิต (PPI)</div>
+    <main data-scroll-container>
+        <!-- Hero Section -->
+        <section id="hero" class="hero-section panel">
+            <div class="hero-content">
+                <div class="badge-wrapper reveal-up">
+                    <div class="badge-glow"></div>
+                    <span class="badge">โครงงานวิจัยเศรษฐศาสตร์ 2026</span>
                 </div>
-                <div class="stat-divider"></div>
-                <div class="stat-card">
-                    <div class="stat-icon">📉</div>
-                    <div class="stat-value text-blue">-12.4%</div>
-                    <div class="stat-label">ความเชื่อมั่นผู้บริโภค</div>
+                <h1 class="hero-title reveal-up delay-1">
+                    <span class="title-line">ภาวะสองขั้วของ</span>
+                    <span class="title-line gradient-text text-glow">เศรษฐกิจไทย</span>
+                </h1>
+                <p class="hero-desc reveal-up delay-2">
+                    ปรากฏการณ์ <strong class="text-accent">Stagflation</strong> ที่ซึ่งเงินเฟ้อพุ่งสูงจากต้นทุนการผลิต 
+                    สวนทางกับเงินฝืดจากกำลังซื้อของผู้บริโภคที่หดตัว
+                </p>
+                <div class="hero-actions reveal-up delay-3">
+                    <a href="#paradox" class="btn btn-primary magnetic-wrap">
+                        <span class="magnetic-item">สำรวจปัญหา</span>
+                        <div class="btn-glow"></div>
+                    </a>
                 </div>
-                <div class="stat-divider"></div>
-                <div class="stat-card">
-                    <div class="stat-icon">⚡</div>
-                    <div class="stat-value text-amber">2.8%</div>
-                    <div class="stat-label">อัตราเงินเฟ้อ (CPI)</div>
-                </div>
-            </div>
-            <a href="#paradox" class="hero-cta animate-fade-up delay-4">
-                <span>สำรวจปัญหา</span>
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3v14m0 0l-5-5m5 5l5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-        </div>
-    </section>
-
-    <!-- Paradox Section -->
-    <section class="section" id="paradox">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">01 — ปัญหา</span>
-                <h2 class="section-title">ความย้อนแย้ง<br><span class="gradient-text">ที่แก้ไม่ได้ง่าย</span></h2>
-                <p class="section-desc">เมื่อเงินเฟ้อและเงินฝืดเกิดขึ้นพร้อมกันในเศรษฐกิจเดียวกัน — นักเศรษฐศาสตร์เรียกสถานการณ์นี้ว่า Stagflation</p>
             </div>
 
-            <div class="paradox-grid">
-                <!-- Seller Side -->
-                <div class="paradox-card seller-card">
-                    <div class="card-glow red-glow"></div>
-                    <div class="card-header">
-                        <div class="card-icon red-icon">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M2 20h20M5 20V8l7-5 7 5v12M9 20v-6h6v6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <!-- 3D Abstract Element -->
+            <div class="hero-visual">
+                <div class="glass-card visual-card float-anim">
+                    <div class="card-inner">
+                        <div class="stat-row">
+                            <span class="stat-label">ดัชนีราคาผู้ผลิต (PPI)</span>
+                            <span class="stat-val text-red">▲ +5.2%</span>
                         </div>
-                        <span class="card-badge red-badge">ฝั่งผู้ขาย / ผู้ผลิต</span>
-                    </div>
-                    <h3 class="card-title">เงินเฟ้อด้านต้นทุน</h3>
-                    <p class="card-subtitle">Cost-Push Inflation</p>
-                    <ul class="card-list">
-                        <li>
-                            <span class="list-icon">🔺</span>
-                            <div>
-                                <strong>วัตถุดิบแพงขึ้น</strong>
-                                <p>ราคาน้ำมัน พลังงาน วัตถุดิบนำเข้าสูงขึ้นต่อเนื่อง</p>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="list-icon">🔺</span>
-                            <div>
-                                <strong>ค่าขนส่งพุ่ง</strong>
-                                <p>ต้นทุนโลจิสติกส์เพิ่มจากราคาน้ำมันและค่าแรง</p>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="list-icon">🔺</span>
-                            <div>
-                                <strong>ค่าแรงขั้นต่ำเพิ่ม</strong>
-                                <p>นโยบายขึ้นค่าแรงเพิ่มภาระต้นทุนการผลิต</p>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="list-icon">🔺</span>
-                            <div>
-                                <strong>ต้องขึ้นราคา</strong>
-                                <p>ถ้าไม่ขึ้นราคา = ขาดทุน → ปิดกิจการ</p>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="card-meter">
-                        <div class="meter-label">ระดับความรุนแรง</div>
-                        <div class="meter-bar"><div class="meter-fill red-fill" style="width: 78%"></div></div>
-                        <div class="meter-value">78%</div>
-                    </div>
-                </div>
-
-                <!-- VS Divider -->
-                <div class="vs-divider">
-                    <div class="vs-line"></div>
-                    <div class="vs-circle">
-                        <span>VS</span>
-                    </div>
-                    <div class="vs-line"></div>
-                </div>
-
-                <!-- Buyer Side -->
-                <div class="paradox-card buyer-card">
-                    <div class="card-glow blue-glow"></div>
-                    <div class="card-header">
-                        <div class="card-icon blue-icon">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        </div>
-                        <span class="card-badge blue-badge">ฝั่งผู้ซื้อ / ผู้บริโภค</span>
-                    </div>
-                    <h3 class="card-title">เงินฝืดด้านอุปสงค์</h3>
-                    <p class="card-subtitle">Demand-Side Deflation</p>
-                    <ul class="card-list">
-                        <li>
-                            <span class="list-icon">🔻</span>
-                            <div>
-                                <strong>รายได้ไม่เพิ่ม</strong>
-                                <p>ค่าจ้างจริง (Real Wage) ไม่เพิ่มตามเงินเฟ้อ</p>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="list-icon">🔻</span>
-                            <div>
-                                <strong>หนี้ครัวเรือนสูง</strong>
-                                <p>หนี้ครัวเรือนไทยสูงเกิน 90% ของ GDP</p>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="list-icon">🔻</span>
-                            <div>
-                                <strong>กำลังซื้อลดลง</strong>
-                                <p>เงินในกระเป๋าเท่าเดิมแต่ซื้อของได้น้อยลง</p>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="list-icon">🔻</span>
-                            <div>
-                                <strong>ชะลอการใช้จ่าย</strong>
-                                <p>ของแพง → ไม่ซื้อ → เศรษฐกิจชะลอ</p>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="card-meter">
-                        <div class="meter-label">ระดับความรุนแรง</div>
-                        <div class="meter-bar"><div class="meter-fill blue-fill" style="width: 85%"></div></div>
-                        <div class="meter-value">85%</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Cycle Diagram -->
-            <div class="cycle-section">
-                <h3 class="cycle-title">วงจรอุบาทว์ของ Stagflation</h3>
-                <div class="cycle-diagram">
-                    <div class="cycle-step" data-step="1">
-                        <div class="step-number">1</div>
-                        <div class="step-content">
-                            <strong>ต้นทุนเพิ่ม</strong>
-                            <p>น้ำมัน วัตถุดิบ ค่าแรง</p>
+                        <div class="stat-divider"></div>
+                        <div class="stat-row">
+                            <span class="stat-label">ความเชื่อมั่นผู้บริโภค</span>
+                            <span class="stat-val text-blue">▼ -12.4%</span>
                         </div>
                     </div>
-                    <div class="cycle-arrow">→</div>
-                    <div class="cycle-step" data-step="2">
-                        <div class="step-number">2</div>
-                        <div class="step-content">
-                            <strong>สินค้าแพงขึ้น</strong>
-                            <p>ผู้ขายต้องขึ้นราคา</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Paradox Section (Scrollytelling) -->
+        <section id="paradox" class="paradox-section panel">
+            <div class="container">
+                <div class="section-header reveal-up">
+                    <span class="section-subtitle">01 / The Paradox</span>
+                    <h2 class="section-title">ความขัดแย้ง<br>ที่แก้ไม่ตก</h2>
+                </div>
+
+                <div class="split-layout">
+                    <!-- Left: Seller -->
+                    <div class="split-card seller glass-panel reveal-left">
+                        <div class="card-icon red-glow">
+                            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                        </div>
+                        <h3>ฝั่งผู้ผลิต</h3>
+                        <h4>Cost-Push Inflation</h4>
+                        <p>ต้นทุนพลังงาน วัตถุดิบ และค่าแรงที่สูงขึ้น บีบให้ภาคธุรกิจต้องผลักภาระไปยังราคาสินค้า หากไม่ปรับราคา กิจการอาจต้องปิดตัวลง</p>
+                        <div class="impact-meter">
+                            <div class="meter-track"><div class="meter-fill red" style="width: 85%"></div></div>
+                            <span class="meter-text">ภาระต้นทุน 85%</span>
                         </div>
                     </div>
-                    <div class="cycle-arrow">→</div>
-                    <div class="cycle-step" data-step="3">
-                        <div class="step-number">3</div>
-                        <div class="step-content">
-                            <strong>คนซื้อน้อยลง</strong>
-                            <p>กำลังซื้อไม่พอ</p>
+
+                    <!-- Center VS -->
+                    <div class="vs-badge reveal-scale">VS</div>
+
+                    <!-- Right: Buyer -->
+                    <div class="split-card buyer glass-panel reveal-right">
+                        <div class="card-icon blue-glow">
+                            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        </div>
+                        <h3>ฝั่งผู้บริโภค</h3>
+                        <h4>Demand-Side Deflation</h4>
+                        <p>ค่าจ้างที่เติบโตไม่ทันเงินเฟ้อ และหนี้ครัวเรือนที่สูงลิ่ว ทำให้กำลังซื้อหดตัว ประชาชนระมัดระวังการใช้จ่าย ส่งผลให้เศรษฐกิจภาพรวมซบเซา</p>
+                        <div class="impact-meter">
+                            <div class="meter-track"><div class="meter-fill blue" style="width: 92%"></div></div>
+                            <span class="meter-text">กำลังซื้อหดตัว 92%</span>
                         </div>
                     </div>
-                    <div class="cycle-arrow">→</div>
-                    <div class="cycle-step" data-step="4">
-                        <div class="step-number">4</div>
-                        <div class="step-content">
-                            <strong>ธุรกิจขาดทุน</strong>
-                            <p>ขายไม่ได้ → ลดคน/ปิดกิจการ</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Dashboard Section -->
+        <section id="data" class="data-section panel">
+            <div class="container">
+                <div class="section-header text-center reveal-up">
+                    <span class="section-subtitle">02 / The Data</span>
+                    <h2 class="section-title">สถิติที่สะท้อนความจริง</h2>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="bento-box main-chart glass-panel reveal-up">
+                        <div class="bento-header">
+                            <h3>แนวโน้ม CPI และ PPI</h3>
+                            <div class="live-indicator"><span class="pulse-dot"></span> ข้อมูลปีล่าสุด</div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="cpiChart"></canvas>
                         </div>
                     </div>
-                    <div class="cycle-arrow cycle-return">↩</div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Data Section -->
-    <section class="section section-dark" id="data">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">02 — ข้อมูล</span>
-                <h2 class="section-title">ตัวเลข<br><span class="gradient-text">บอกความจริง</span></h2>
-                <p class="section-desc">ข้อมูลจากธนาคารแห่งประเทศไทย (BOT) และสำนักงานสถิติแห่งชาติ แสดงให้เห็นภาพชัดเจน</p>
-            </div>
+                    <div class="bento-box side-chart glass-panel reveal-up delay-1">
+                        <div class="bento-header">
+                            <h3>หนี้ครัวเรือนต่อ GDP</h3>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="debtChart"></canvas>
+                        </div>
+                    </div>
 
-            <div class="charts-grid">
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h3>ดัชนีราคาผู้บริโภค (CPI) vs ดัชนีราคาผู้ผลิต (PPI)</h3>
-                        <p>เปรียบเทียบแนวโน้มรายเดือน (% เปลี่ยนแปลง YoY)</p>
-                    </div>
-                    <div class="chart-wrapper">
-                        <canvas id="cpiPpiChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h3>ดัชนีความเชื่อมั่นผู้บริโภค</h3>
-                        <p>Consumer Confidence Index (เกณฑ์ 100 = ปกติ)</p>
-                    </div>
-                    <div class="chart-wrapper">
-                        <canvas id="confidenceChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="chart-card chart-wide">
-                    <div class="chart-header">
-                        <h3>หนี้ครัวเรือนต่อ GDP (%)</h3>
-                        <p>สะท้อนภาระทางการเงินของผู้บริโภคไทย</p>
-                    </div>
-                    <div class="chart-wrapper">
-                        <canvas id="debtChart"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Key Indicators -->
-            <div class="indicators-grid">
-                <div class="indicator-card">
-                    <div class="ind-header">
-                        <span class="ind-icon">🛢️</span>
-                        <span class="ind-change negative">+18.7%</span>
-                    </div>
-                    <div class="ind-value">ราคาน้ำมัน</div>
-                    <div class="ind-desc">ดีเซลเฉลี่ยเพิ่มขึ้นจากปีก่อน</div>
-                    <div class="ind-sparkline red-spark"></div>
-                </div>
-                <div class="indicator-card">
-                    <div class="ind-header">
-                        <span class="ind-icon">🏠</span>
-                        <span class="ind-change negative">91.3%</span>
-                    </div>
-                    <div class="ind-value">หนี้ครัวเรือน/GDP</div>
-                    <div class="ind-desc">สูงเป็นอันดับต้นๆ ของเอเชีย</div>
-                    <div class="ind-sparkline amber-spark"></div>
-                </div>
-                <div class="indicator-card">
-                    <div class="ind-header">
-                        <span class="ind-icon">💰</span>
-                        <span class="ind-change positive">+2.25%</span>
-                    </div>
-                    <div class="ind-value">อัตราดอกเบี้ย</div>
-                    <div class="ind-desc">นโยบายของ ธปท. ปัจจุบัน</div>
-                    <div class="ind-sparkline blue-spark"></div>
-                </div>
-                <div class="indicator-card">
-                    <div class="ind-header">
-                        <span class="ind-icon">📉</span>
-                        <span class="ind-change negative">-8.2%</span>
-                    </div>
-                    <div class="ind-value">ยอดค้าปลีก</div>
-                    <div class="ind-desc">การบริโภคภาคเอกชนชะลอตัว</div>
-                    <div class="ind-sparkline red-spark"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Theory Section -->
-    <section class="section" id="theory">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">03 — ทฤษฎี</span>
-                <h2 class="section-title">กรอบแนวคิด<br><span class="gradient-text">ทางเศรษฐศาสตร์</span></h2>
-                <p class="section-desc">ทฤษฎีที่ใช้อธิบายปรากฏการณ์ Stagflation และภาวะเศรษฐกิจสองขั้วในไทย</p>
-            </div>
-
-            <div class="theory-grid">
-                <div class="theory-card">
-                    <div class="theory-number">01</div>
-                    <div class="theory-icon">📐</div>
-                    <h3>Cost-Push Inflation</h3>
-                    <h4>เงินเฟ้อจากต้นทุน</h4>
-                    <p>เกิดจากต้นทุนการผลิตที่สูงขึ้น ไม่ว่าจะเป็นราคาวัตถุดิบ ค่าแรง หรือค่าพลังงาน ทำให้ผู้ผลิตต้องผลักภาระไปยังราคาสินค้า</p>
-                    <div class="theory-tags">
-                        <span class="tag">Supply-side</span>
-                        <span class="tag">Cost of Production</span>
-                        <span class="tag">AS Curve Shift</span>
-                    </div>
-                </div>
-
-                <div class="theory-card">
-                    <div class="theory-number">02</div>
-                    <div class="theory-icon">📉</div>
-                    <h3>Demand Deficiency</h3>
-                    <h4>อุปสงค์ไม่เพียงพอ</h4>
-                    <p>เมื่อกำลังซื้อของประชาชนลดลง ความต้องการซื้อสินค้าและบริการลดตาม ส่งผลให้เศรษฐกิจชะลอตัว แม้ราคาสินค้าจะยังสูงอยู่</p>
-                    <div class="theory-tags">
-                        <span class="tag">Demand-side</span>
-                        <span class="tag">Keynesian</span>
-                        <span class="tag">AD Curve Shift</span>
-                    </div>
-                </div>
-
-                <div class="theory-card">
-                    <div class="theory-number">03</div>
-                    <div class="theory-icon">🔄</div>
-                    <h3>Stagflation Theory</h3>
-                    <h4>ทฤษฎีเศรษฐกิจชะงักงัน</h4>
-                    <p>สถานการณ์ที่เงินเฟ้อสูงเกิดพร้อมกับการเติบโตทางเศรษฐกิจที่ต่ำและการว่างงานสูง ขัดกับทฤษฎี Phillips Curve แบบดั้งเดิม</p>
-                    <div class="theory-tags">
-                        <span class="tag">Stagnation + Inflation</span>
-                        <span class="tag">1970s Oil Crisis</span>
-                        <span class="tag">Supply Shock</span>
-                    </div>
-                </div>
-
-                <div class="theory-card">
-                    <div class="theory-number">04</div>
-                    <div class="theory-icon">⚖️</div>
-                    <h3>Phillips Curve Breakdown</h3>
-                    <h4>เส้น Phillips ล้มเหลว</h4>
-                    <p>ทฤษฎีเดิมบอกว่าเงินเฟ้อสูง = ว่างงานต่ำ แต่ Stagflation พิสูจน์ว่าทั้งสองอย่างเกิดพร้อมกันได้ ซึ่งเป็นสิ่งที่เกิดขึ้นในไทย</p>
-                    <div class="theory-tags">
-                        <span class="tag">Trade-off</span>
-                        <span class="tag">Expectations</span>
-                        <span class="tag">Adaptive vs Rational</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- AS-AD Diagram -->
-            <div class="diagram-section">
-                <h3 class="diagram-title">แบบจำลอง AS-AD: เมื่อ Supply Shock เกิดขึ้น</h3>
-                <div class="diagram-container">
-                    <div class="diagram-visual">
-                        <canvas id="asadDiagram" width="500" height="400"></canvas>
-                    </div>
-                    <div class="diagram-explain">
-                        <div class="explain-step">
-                            <div class="explain-dot red-dot"></div>
-                            <div>
-                                <strong>AS₁ → AS₂ (เส้นอุปทานเลื่อนซ้าย)</strong>
-                                <p>ต้นทุนการผลิตสูงขึ้น ทำให้ Aggregate Supply ลดลง</p>
+                    <div class="bento-box stats-box glass-panel reveal-up delay-2">
+                        <div class="stat-item">
+                            <span class="stat-icon">📉</span>
+                            <div class="stat-info">
+                                <span class="stat-name">ยอดค้าปลีก</span>
+                                <span class="stat-number text-red">-8.2%</span>
                             </div>
                         </div>
-                        <div class="explain-step">
-                            <div class="explain-dot blue-dot"></div>
-                            <div>
-                                <strong>AD₁ → AD₂ (เส้นอุปสงค์เลื่อนซ้าย)</strong>
-                                <p>กำลังซื้อลดลง ทำให้ Aggregate Demand ลดลงตาม</p>
-                            </div>
-                        </div>
-                        <div class="explain-step">
-                            <div class="explain-dot amber-dot"></div>
-                            <div>
-                                <strong>ผลลัพธ์: ราคาสูง + ผลผลิตต่ำ</strong>
-                                <p>ดุลยภาพใหม่อยู่ที่ราคาสูงขึ้นแต่ GDP ลดลง = Stagflation</p>
+                        <div class="stat-item">
+                            <span class="stat-icon">⛽</span>
+                            <div class="stat-info">
+                                <span class="stat-name">ราคาพลังงาน</span>
+                                <span class="stat-number text-amber">+18.7%</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Impact Section -->
-    <section class="section section-dark" id="impact">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">04 — ผลกระทบ</span>
-                <h2 class="section-title">ใครได้รับ<br><span class="gradient-text">ผลกระทบบ้าง?</span></h2>
-                <p class="section-desc">Stagflation กระทบทุกภาคส่วนในเศรษฐกิจ ตั้งแต่แม่ค้าตลาดสดจนถึงบริษัทข้ามชาติ</p>
-            </div>
-
-            <div class="impact-grid">
-                <div class="impact-card">
-                    <div class="impact-emoji">👨‍🌾</div>
-                    <h3>เกษตรกร</h3>
-                    <p>ปุ๋ยแพง ค่าขนส่งแพง แต่ราคาพืชผลถูกกดจากพ่อค้าคนกลาง</p>
-                    <div class="impact-severity high">ผลกระทบสูงมาก</div>
-                </div>
-                <div class="impact-card">
-                    <div class="impact-emoji">🏪</div>
-                    <h3>ร้านค้ารายย่อย</h3>
-                    <p>ต้นทุนสินค้าแพงขึ้น ขึ้นราคาก็กลัวลูกค้าหาย ไม่ขึ้นก็ขาดทุน</p>
-                    <div class="impact-severity high">ผลกระทบสูงมาก</div>
-                </div>
-                <div class="impact-card">
-                    <div class="impact-emoji">👷</div>
-                    <h3>ลูกจ้าง/พนักงาน</h3>
-                    <p>เงินเดือนเท่าเดิมแต่ค่าครองชีพสูงขึ้น ค่าจ้างจริงลดลง</p>
-                    <div class="impact-severity high">ผลกระทบสูงมาก</div>
-                </div>
-                <div class="impact-card">
-                    <div class="impact-emoji">🏭</div>
-                    <h3>โรงงาน/SME</h3>
-                    <p>ต้นทุนพุ่งแต่ขายของลำบาก บางรายต้องลดพนักงานหรือปิดกิจการ</p>
-                    <div class="impact-severity medium">ผลกระทบสูง</div>
-                </div>
-                <div class="impact-card">
-                    <div class="impact-emoji">🎓</div>
-                    <h3>นักศึกษา/จบใหม่</h3>
-                    <p>หางานยากขึ้น บริษัทชะลอการจ้าง ค่าครองชีพสูงขึ้น</p>
-                    <div class="impact-severity medium">ผลกระทบสูง</div>
-                </div>
-                <div class="impact-card">
-                    <div class="impact-emoji">👴</div>
-                    <h3>ผู้สูงอายุ/ผู้เกษียณ</h3>
-                    <p>เงินออมมีค่าน้อยลง ค่ารักษาพยาบาลสูงขึ้น รายได้คงที่</p>
-                    <div class="impact-severity high">ผลกระทบสูงมาก</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Policy Section -->
-    <section class="section" id="policy">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">05 — นโยบาย</span>
-                <h2 class="section-title">ทางออก<br><span class="gradient-text">มีอะไรบ้าง?</span></h2>
-                <p class="section-desc">นโยบายแก้ Stagflation ไม่มีสูตรสำเร็จ — แต่ละมาตรการมีข้อดีข้อเสียต่างกัน</p>
-            </div>
-
-            <div class="policy-grid">
-                <div class="policy-card">
-                    <div class="policy-header">
-                        <div class="policy-icon">🏦</div>
-                        <div class="policy-type">นโยบายการเงิน</div>
-                    </div>
-                    <h3>ปรับอัตราดอกเบี้ย</h3>
-                    <p>ธปท. ต้องเลือกระหว่างขึ้นดอกเบี้ยเพื่อคุมเงินเฟ้อ หรือลดดอกเบี้ยเพื่อกระตุ้นเศรษฐกิจ</p>
-                    <div class="policy-pros-cons">
-                        <div class="pros">
-                            <span class="label">✅ ข้อดี</span>
-                            <p>ควบคุมเงินเฟ้อได้โดยตรง</p>
-                        </div>
-                        <div class="cons">
-                            <span class="label">❌ ข้อเสีย</span>
-                            <p>ดอกเบี้ยสูง = คนกู้ยากขึ้น = เศรษฐกิจยิ่งชะลอ</p>
-                        </div>
-                    </div>
-                    <div class="policy-difficulty">
-                        <span>ความยากในการดำเนินการ</span>
-                        <div class="diff-bar"><div class="diff-fill" style="width:70%"></div></div>
-                    </div>
+        <!-- Theory Section -->
+        <section id="theory" class="theory-section panel">
+            <div class="container">
+                <div class="section-header reveal-up">
+                    <span class="section-subtitle">03 / Economics</span>
+                    <h2 class="section-title">ทางตันของนโยบาย</h2>
                 </div>
 
-                <div class="policy-card">
-                    <div class="policy-header">
-                        <div class="policy-icon">🏛️</div>
-                        <div class="policy-type">นโยบายการคลัง</div>
+                <div class="cards-layout">
+                    <!-- Card 1 -->
+                    <div class="theory-card glass-panel hover-3d">
+                        <div class="card-bg-gradient red"></div>
+                        <div class="card-number">01</div>
+                        <h3>ถ้ารัฐขึ้นดอกเบี้ย</h3>
+                        <p>เพื่อสกัดเงินเฟ้อ... จะทำให้ภาระหนี้ครัวเรือนพุ่งสูงขึ้น ธุรกิจกู้เงินยากขึ้น ยิ่งเร่งให้เศรษฐกิจชะลอตัวรุนแรงกว่าเดิม (Recession)</p>
                     </div>
-                    <h3>อุดหนุนต้นทุน & กระตุ้นอุปสงค์</h3>
-                    <p>รัฐช่วยลดต้นทุนผู้ผลิต (อุดหนุนพลังงาน) และเพิ่มกำลังซื้อผู้บริโภค (ลดภาษี, แจกเงิน)</p>
-                    <div class="policy-pros-cons">
-                        <div class="pros">
-                            <span class="label">✅ ข้อดี</span>
-                            <p>แก้ได้ทั้งสองด้านพร้อมกัน</p>
-                        </div>
-                        <div class="cons">
-                            <span class="label">❌ ข้อเสีย</span>
-                            <p>ใช้งบประมาณมาก อาจสร้างหนี้สาธารณะ</p>
-                        </div>
-                    </div>
-                    <div class="policy-difficulty">
-                        <span>ความยากในการดำเนินการ</span>
-                        <div class="diff-bar"><div class="diff-fill" style="width:85%"></div></div>
-                    </div>
-                </div>
 
-                <div class="policy-card">
-                    <div class="policy-header">
-                        <div class="policy-icon">⚡</div>
-                        <div class="policy-type">นโยบายด้านอุปทาน</div>
+                    <!-- Card 2 -->
+                    <div class="theory-card glass-panel hover-3d">
+                        <div class="card-bg-gradient blue"></div>
+                        <div class="card-number">02</div>
+                        <h3>ถ้ารัฐลดดอกเบี้ย</h3>
+                        <p>เพื่อกระตุ้นเศรษฐกิจ... จะทำให้เงินบาทอ่อนค่า ต้นทุนการนำเข้าพลังงานและวัตถุดิบจะพุ่งสูงขึ้น ทำให้ของยิ่งแพงขึ้น (Hyperinflation)</p>
                     </div>
-                    <h3>เพิ่มประสิทธิภาพการผลิต</h3>
-                    <p>ลงทุนโครงสร้างพื้นฐาน เทคโนโลยี ลดต้นทุนระยะยาว พัฒนาพลังงานทดแทน</p>
-                    <div class="policy-pros-cons">
-                        <div class="pros">
-                            <span class="label">✅ ข้อดี</span>
-                            <p>แก้ปัญหาที่ต้นเหตุ ยั่งยืน</p>
-                        </div>
-                        <div class="cons">
-                            <span class="label">❌ ข้อเสีย</span>
-                            <p>ใช้เวลานาน ไม่เห็นผลทันที</p>
-                        </div>
-                    </div>
-                    <div class="policy-difficulty">
-                        <span>ความยากในการดำเนินการ</span>
-                        <div class="diff-bar"><div class="diff-fill" style="width:60%"></div></div>
+
+                    <!-- Card 3 -->
+                    <div class="theory-card glass-panel hover-3d">
+                        <div class="card-bg-gradient purple"></div>
+                        <div class="card-number">03</div>
+                        <h3>ทางออกระยะยาว</h3>
+                        <p>การปรับโครงสร้างอุตสาหกรรม (Supply-side Policies) เพิ่มประสิทธิภาพการผลิต ลดการพึ่งพาพลังงานนำเข้า และปรับโครงสร้างหนี้</p>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Research Question -->
-            <div class="research-section">
-                <div class="research-card">
-                    <div class="research-icon">🔬</div>
-                    <h3>คำถามวิจัย</h3>
-                    <blockquote>
-                        "เงินเฟ้อต้นทุนและเงินฝืดอุปสงค์ที่เกิดขึ้นพร้อมกัน ส่งผลต่อเศรษฐกิจไทยอย่างไร และมีนโยบายใดที่สามารถแก้ทั้งสองปัญหาพร้อมกันได้?"
-                    </blockquote>
-                    <div class="research-objectives">
-                        <h4>วัตถุประสงค์ของการวิจัย</h4>
-                        <ol>
-                            <li>ศึกษาสาเหตุของเงินเฟ้อด้านต้นทุนในภาคการผลิตของไทย</li>
-                            <li>วิเคราะห์ปัจจัยที่ทำให้อุปสงค์ของผู้บริโภคลดลง</li>
-                            <li>เปรียบเทียบผลกระทบต่อภาคส่วนต่างๆ ของเศรษฐกิจ</li>
-                            <li>เสนอแนวทางนโยบายที่เหมาะสมในการแก้ปัญหาทั้งสองด้าน</li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sources Section -->
-    <section class="section section-dark" id="sources">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">แหล่งข้อมูล</span>
-                <h2 class="section-title">อ้างอิง<br><span class="gradient-text">และแหล่งข้อมูล</span></h2>
-            </div>
-            <div class="sources-grid">
-                <a href="https://www.bot.or.th" target="_blank" class="source-card">
-                    <div class="source-icon">🏦</div>
-                    <h4>ธนาคารแห่งประเทศไทย</h4>
-                    <p>ข้อมูล CPI, อัตราดอกเบี้ย, นโยบายการเงิน</p>
-                    <span class="source-link">bot.or.th →</span>
-                </a>
-                <a href="https://www.nesdc.go.th" target="_blank" class="source-card">
-                    <div class="source-icon">📊</div>
-                    <h4>สภาพัฒน์ (NESDC)</h4>
-                    <p>GDP, หนี้ครัวเรือน, ดัชนีเศรษฐกิจ</p>
-                    <span class="source-link">nesdc.go.th →</span>
-                </a>
-                <a href="https://www.moc.go.th" target="_blank" class="source-card">
-                    <div class="source-icon">🏢</div>
-                    <h4>กระทรวงพาณิชย์</h4>
-                    <p>ดัชนีราคาผู้บริโภค, ดัชนีราคาผู้ผลิต</p>
-                    <span class="source-link">moc.go.th →</span>
-                </a>
-                <a href="https://www.worldbank.org" target="_blank" class="source-card">
-                    <div class="source-icon">🌏</div>
-                    <h4>World Bank</h4>
-                    <p>เปรียบเทียบข้อมูลเศรษฐกิจระดับนานาชาติ</p>
-                    <span class="source-link">worldbank.org →</span>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
+        <!-- Footer -->
+        <footer class="footer glass-panel">
+            <div class="container footer-inner">
                 <div class="footer-brand">
-                    <span class="logo-icon">📊</span>
-                    <span class="logo-text">Stagflation<span class="logo-accent">TH</span></span>
+                    <span class="brand-text">Stagflation<span class="gradient-text">TH</span></span>
+                    <p>Research Project 2026</p>
                 </div>
-                <p class="footer-text">โครงงานวิจัย — ภาวะสองขั้วของเศรษฐกิจไทย</p>
-                <p class="footer-credit">© 2025 วิชาโครงงาน</p>
+                <div class="footer-links">
+                    <a href="https://github.com/tanasankuro-debug/-69" target="_blank" class="hover-underline">GitHub Repository</a>
+                </div>
             </div>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
+        </footer>
+    </main>
 </body>
 </html>
